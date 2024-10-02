@@ -63,39 +63,14 @@ namespace DotNetCore_API.Controllers
             {
                 return NotFound();
             }
-
-            //var regionDto = new RegionDto
-            //    {
-            //    Id = regionDomain.Id,
-            //    Code = regionDomain.Code,
-            //    Name = regionDomain.Name,
-            //    RegionImageUrl = regionDomain.RegionImageUrl
-            //};
-               return Ok(_mapper.Map<List<RegionDto>>(regionDomain));
+            return Ok(_mapper.Map<List<RegionDto>>(regionDomain));
         }
 
         [HttpPost]
 
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
-            // var regionDomainModel = new Region
-            // {
-            //     Code = addRegionRequestDto.Code,
-            //     Name = addRegionRequestDto.Name,
-            //     RegionImageUrl = addRegionRequestDto.RegionImageUrl
-            // };
-            //regionDomainModel = await _regionRepository.CreateAsync(regionDomainModel);
-
-
-            //var regionDto = new RegionDto
-            //{
-            //    Id = regionDomainModel.Id,
-            //    Name = regionDomainModel.Name,
-            //    Code = regionDomainModel.Code,
-            //    RegionImageUrl = regionDomainModel.RegionImageUrl
-            //};
-
-            var regionDomainModel = _mapper.Map<Region>(addRegionRequestDto);
+              var regionDomainModel = _mapper.Map<Region>(addRegionRequestDto);
             regionDomainModel = await _regionRepository.CreateAsync(regionDomainModel);
             var regionDto = _mapper.Map<RegionDto>(regionDomainModel);
 
@@ -106,13 +81,6 @@ namespace DotNetCore_API.Controllers
         public async Task<IActionResult>  Update( Guid id, [FromBody]UpdateRegionRequestDTO updateRegionRequestDTO )
 
         {
-            //    var regionDomainModel = new Region
-            //    {
-            //        Code = updateRegionRequestDTO.Code,
-            //        Name = updateRegionRequestDTO.Name,
-            //        RegionImageUrl = updateRegionRequestDTO.RegionImageUrl
-
-            //    };
             var regionDomainModel = _mapper.Map<Region>(updateRegionRequestDTO);
         
 
@@ -121,14 +89,7 @@ namespace DotNetCore_API.Controllers
 
                     { return NotFound();  }
             var regionDto = _mapper.Map<RegionDto>(regionDomainModel);
-            //  var regionDto = new RegionDto
-            //{
-            //    Id = regionDomainModel.Id,
-            //    Name = regionDomainModel.Name,
-            //    Code = regionDomainModel.Code,
-            //    RegionImageUrl = regionDomainModel.RegionImageUrl
-            //};
-
+            
             return Ok(regionDto);
 
          }
@@ -144,14 +105,7 @@ namespace DotNetCore_API.Controllers
                 return NotFound();
             }
 
-            //var regionDto = new RegionDto
-            //{
-            //    Id = regionDomainModel.Id,
-            //    Name = regionDomainModel.Name,
-            //    Code = regionDomainModel.Code,
-            //    RegionImageUrl = regionDomainModel.RegionImageUrl
-            //};
-
+            
             return Ok(_mapper.Map<RegionDto>(regionDomainModel));
 
 
