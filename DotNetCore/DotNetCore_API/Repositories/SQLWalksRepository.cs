@@ -31,9 +31,34 @@ namespace DotNetCore_API.Repositories
             return existingWalk;
         }
 
-        public async Task<List<Walk>> GetAllAsync()
+        public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null, string? sortyBy = null, bool isAscending = true,
+           int  pageNumber = 1 , int PageSize = 1000)
         {
-             return  await _dbcontext.Walks.Include("Difficulty").Include("Region").ToListAsync();
+            var walks = _dbcontext.Walks.Include("Difficulty").Include("Region").AsQueryable();
+
+            //filteringif 
+
+            if (string.IsNullOrWhiteSpace(filterOn)== false && string.IsNullOrWhiteSpace(filterQuery)== false)
+            {
+                if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = walks.Where(x => x.Name.Contains(filterQuery));
+                }
+            }
+
+            //sorting 
+
+            if(string.IsNullOrWhiteSpace(sortyBy)== false)
+            {
+                if(sortyBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = isAscending ? walks.OrderBy(x => x.Name) : walks.OrderByDescending(x => x.Name);
+                }
+            }
+            var skipResults = (pageNumber - 1) * PageSize;
+            return await walks.Skip(skipResults).Take(PageSize).ToListAsync();
+
+            //return  await _dbcontext.Walks.Include("Difficulty").Include("Region").ToListAsync();
 
         }
 

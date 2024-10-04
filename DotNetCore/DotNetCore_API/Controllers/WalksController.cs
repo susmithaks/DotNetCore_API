@@ -31,9 +31,11 @@ namespace DotNetCore_API.Controllers
 
         [HttpGet]
 
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] string? filrerOn , [FromQuery] string? filterQuery , [FromQuery] string? sortyBy,
+            [FromQuery] bool? isAscending , [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000)
         {
-           var walksDomainModel= await _walkRepository.GetAllAsync();
+           var walksDomainModel= await _walkRepository.GetAllAsync(filrerOn, filterQuery, sortyBy, isAscending ?? true, pageNumber,pageSize);
+            throw new Exception("this is a new exceprion");
             return Ok(_mapper.Map<List<WalkDTO>>(walksDomainModel));
         }
         [HttpGet]

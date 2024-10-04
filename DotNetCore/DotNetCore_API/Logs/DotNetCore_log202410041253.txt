@@ -1,0 +1,19 @@
+2024-10-04 12:53:03.565 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7165/swagger/index.html - -
+2024-10-04 12:53:05.060 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7165/_framework/aspnetcore-browser-refresh.js - -
+2024-10-04 12:53:05.097 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7165/_framework/aspnetcore-browser-refresh.js - - - 200 11998 application/javascript;+charset=utf-8 32.2801ms
+2024-10-04 12:53:05.099 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7165/swagger/index.html - - - 200 - text/html;charset=utf-8 1559.0253ms
+2024-10-04 12:53:05.141 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7165/_vs/browserLink - -
+2024-10-04 12:53:05.299 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7165/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 158.1809ms
+2024-10-04 12:53:05.648 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7165/swagger/v1/swagger.json - -
+2024-10-04 12:53:06.149 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7165/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 501.7812ms
+2024-10-04 12:53:12.974 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7165/api/Regions - -
+2024-10-04 12:53:13.294 +05:30 [INF] Executing endpoint 'DotNetCore_API.Controllers.RegionsController.GetAll (DotNetCore_API)'
+2024-10-04 12:53:13.381 +05:30 [INF] Route matched with {action = "GetAll", controller = "Regions"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller DotNetCore_API.Controllers.RegionsController (DotNetCore_API).
+2024-10-04 12:53:19.105 +05:30 [INF] Executed DbCommand (147ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[Id], [r].[Code], [r].[Name], [r].[RegionImageUrl]
+FROM [Regions] AS [r]
+2024-10-04 12:53:19.470 +05:30 [INF] Finished Region with data :[{"Id":"f7248fc3-2585-4efb-8d1d-1c555f4087f6","Code":"AKL","Name":"Auckland","RegionImageUrl":"https://images.pexels.com/photos/5169056/pexels-photo-5169056.jpeg?auto=compress\u0026cs=tinysrgb\u0026w=1260\u0026h=750\u0026dpr=1"},{"Id":"14ceba71-4b51-4777-9b17-46602cf66153","Code":"BOP","Name":"Bay Of Plenty","RegionImageUrl":null},{"Id":"6884f7d7-ad1f-4101-8df3-7a6fa7387d81","Code":"NTL","Name":"Northland","RegionImageUrl":null},{"Id":"f077a22e-4248-4bf6-b564-c7cf4e250263","Code":"STL","Name":"Southland","RegionImageUrl":null},{"Id":"cfa06ed2-bf65-4b65-93ed-c9d286ddb0de","Code":"WGN","Name":"Wellington","RegionImageUrl":"https://images.pexels.com/photos/4350631/pexels-photo-4350631.jpeg?auto=compress\u0026cs=tinysrgb\u0026w=1260\u0026h=750\u0026dpr=1"}]
+2024-10-04 12:53:19.579 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[DotNetCore_API.Models.DTO.RegionDto, DotNetCore_API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-10-04 12:53:19.647 +05:30 [INF] Executed action DotNetCore_API.Controllers.RegionsController.GetAll (DotNetCore_API) in 6244.9427ms
+2024-10-04 12:53:19.655 +05:30 [INF] Executed endpoint 'DotNetCore_API.Controllers.RegionsController.GetAll (DotNetCore_API)'
+2024-10-04 12:53:19.720 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7165/api/Regions - - - 200 - application/json;+charset=utf-8 6745.8879ms
