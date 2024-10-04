@@ -5,7 +5,7 @@ namespace DotNetCore_API.Data
 {
     public class DotNetCoreDbcontext : DbContext
     {
-        public DotNetCoreDbcontext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        public DotNetCoreDbcontext(DbContextOptions<DotNetCoreDbcontext> dbContextOptions) : base(dbContextOptions)
         {
 
         }

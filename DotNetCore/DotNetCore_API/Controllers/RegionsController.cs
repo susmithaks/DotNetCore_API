@@ -1,16 +1,21 @@
 ﻿using AutoMapper;
+using DotNetCore_API.CustomActionFilters;
 using DotNetCore_API.Data;
 using DotNetCore_API.Models.Domain;
 using DotNetCore_API.Models.DTO;
 using DotNetCore_API.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System.Text.Json;
 
 namespace DotNetCore_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+   
 
     
     public class RegionsController : ControllerBase
@@ -19,42 +24,39 @@ namespace DotNetCore_API.Controllers
         private readonly DotNetCoreDbcontext _dbcontext;
         private readonly IRegionRepository _regionRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<RegionsController> _logger;
 
-        public RegionsController(DotNetCoreDbcontext dbcontext , IRegionRepository regionRepository , IMapper mapper )
+        public RegionsController(DotNetCoreDbcontext dbcontext , IRegionRepository regionRepository , IMapper mapper  , ILogger<RegionsController> logger)
         {
             _dbcontext = dbcontext;
             _regionRepository = regionRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public DotNetCoreDbcontext Dbcontext { get; set; }
         public IRegionRepository RegionRepository { get; }
 
         [HttpGet]
+       // [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
-            var regionsDomain = await _regionRepository.GetAllAsync();
-
-            //var regionsDto = new List<RegionDto>();
-            //foreach(var regionDomain in regionsDomain)
-            //{
-            //    regionsDto.Add(new RegionDto()
-            //    {
-            //        Id = regionDomain.Id,
-            //        Name = regionDomain.Name,
-            //        Code = regionDomain.Code,
-            //        RegionImageUrl = regionDomain.RegionImageUrl
-            //    });
-
-            //}
 
             
+                var regionsDomain = await _regionRepository.GetAllAsync();
 
-            return Ok(_mapper.Map<List<RegionDto>>(regionsDomain));
+                _logger.LogInformation($"Finished Region with data :{JsonSerializer.Serialize(regionsDomain)}");
+
+                return Ok(_mapper.Map<List<RegionDto>>(regionsDomain));
+            
+
+           
+           
         }
 
         [HttpGet]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetById([FromRoute]Guid id)
         {
             //var regions = _dbcontext.Regions.Find(id);
@@ -67,7 +69,8 @@ namespace DotNetCore_API.Controllers
         }
 
         [HttpPost]
-
+        [ValidateModelAttributes]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
               var regionDomainModel = _mapper.Map<Region>(addRegionRequestDto);
@@ -78,6 +81,7 @@ namespace DotNetCore_API.Controllers
         }
         [HttpPut]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult>  Update( Guid id, [FromBody]UpdateRegionRequestDTO updateRegionRequestDTO )
 
         {
@@ -96,6 +100,8 @@ namespace DotNetCore_API.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
+        [ValidateModelAttributes]
+        [Authorize(Roles = "Writer")]
 
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
